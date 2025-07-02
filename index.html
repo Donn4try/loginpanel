@@ -1,36 +1,33 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Panel - Mas Donn</title>
+  <title>Mas Donn Bio</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f9f5f2;
-      display: flex;
-      flex-direction: column;
+    * {
+      box-sizing: border-box;
     }
 
-    body {
-      justify-content: center;
-      align-items: center;
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f5f2;
+      min-height: 100vh;
     }
 
     .container {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      min-height: 100vh;
       width: 100%;
       max-width: 400px;
+      margin: 0 auto;
       background-color: #f9f5f2;
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       overflow: hidden;
-      min-height: 100vh;
     }
 
     .card {
@@ -45,7 +42,7 @@
       border-bottom: 4px solid #f9f5f2;
     }
 
-    img.profile {
+    .profile {
       width: 120px;
       height: 120px;
       border-radius: 50%;
@@ -60,13 +57,22 @@
       font-size: 22px;
     }
 
-    p.description {
+    .followers {
       margin: 0;
       color: #666;
       font-style: italic;
     }
 
-    .btn {
+    input[type="email"], input[type="password"], input[type="text"] {
+      width: calc(100% - 40px);
+      margin: 10px auto;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      display: block;
+    }
+
+    button.btn, .btn {
       display: block;
       width: calc(100% - 40px);
       margin: 10px auto;
@@ -74,13 +80,11 @@
       border-radius: 30px;
       font-weight: bold;
       text-align: center;
-      text-decoration: none;
       border: 2px solid #111;
       background: transparent;
       color: #111;
       cursor: pointer;
-      transition: transform 0.2s ease-in-out;
-      box-sizing: border-box;
+      transition: all 0.3s ease;
     }
 
     .btn.dark {
@@ -89,8 +93,49 @@
       border: none;
     }
 
-    .btn:active {
-      transform: scale(0.96);
+    .btn:hover {
+      transform: scale(1.02);
+      opacity: 0.9;
+    }
+
+    .form-wrapper {
+      transition: all 0.5s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .show {
+      opacity: 1;
+    }
+
+    #accountList ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #accountList li {
+      background: #fff;
+      margin: 8px 20px;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #accountList li:hover {
+      transform: scale(1.02);
+      background-color: #f0f0f0;
     }
 
     .footer {
@@ -136,71 +181,216 @@
       padding-top: 10px;
     }
 
-    .user-list {
-      text-align: left;
-      margin: 20px;
-      list-style: none;
-      padding-left: 0;
-    }
-
-    .user-list li {
-      background: #fff;
-      margin-bottom: 10px;
+    #inspectBox {
       padding: 10px;
+      font-size: 13px;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.6);
+      margin: 10px 20px;
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      font-size: 14px;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: none;
     }
 
-    .logout-container {
-      padding: 0 20px 20px;
+    #inspectBox.show {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    #logoutBtn {
+      background: crimson;
+      color: white;
+      border: none;
+    }
+
+    #logoutBtn:hover {
+      background: darkred;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="card">
+    <div class="card" id="mainCard">
       <div class="banner"></div>
-      <img src="https://i.ibb.co/MDvPDJ8W/donn.png" alt="Admin Profile" class="profile" />
-      <h2>ADMIN PANEL</h2>
-      <p class="description">Daftar akun terdaftar</p>
+      <img src="https://i.ibb.co/MDvPDJ8W/donn.png" class="profile" />
+      <h2>MAS DONN</h2>
+      <p class="followers">daftarkan akun untuk mendapat akses mod</p>
 
-      <!-- Daftar akun -->
-      <ul class="user-list" id="userList"></ul>
+      <div class="form-wrapper" id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" />
+        <input type="password" id="loginPassword" placeholder="Password" />
+        <button class="btn dark" onclick="handleLogin()">Login</button>
+        <button class="btn" onclick="switchForm('register')">Belum punya akun?</button>
+      </div>
 
-      <!-- Tombol Logout -->
-      <div class="logout-container">
-        <button class="btn dark" onclick="logout()">Logout</button>
+      <div class="form-wrapper hidden" id="registerForm">
+        <input type="email" id="regEmail" placeholder="Email" />
+        <input type="password" id="regPassword" placeholder="Password" />
+        <button class="btn dark" onclick="handleRegister()">Daftar</button>
+        <button class="btn" onclick="switchForm('login')">Sudah punya akun?</button>
       </div>
     </div>
 
-    <div class="footer">
-      <img src="https://i.ibb.co/MDvPDJ8W/donn.png" alt=" " />
+    <div class="card hidden" id="adminPage">
+      <div class="banner"></div>
+      <img src="https://i.ibb.co/MDvPDJ8W/donn.png" class="profile" />
+      <h2>DATA AKUN</h2>
+      <p class="followers">Akses administrasi</p>
+      <input type="text" id="searchInput" placeholder="Cari akun..." oninput="filterAccounts()" />
+      <div id="accountList"><ul></ul></div>
+      <div id="inspectBox"></div>
+      <button class="btn dark" id="logoutBtn" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="footer" id="about">
+      <img src="https://i.ibb.co/MDvPDJ8W/donn.png" />
       <div class="username">@donn.4try</div>
-      <p>Selamat datang di admin panel. Anda dapat memantau semua akun yang telah login atau mendaftar.</p>
+      <p>Daftarkan akun dan login untuk mendapatkan akses mod</p>
+      <p>fitur ini kami kami terapkan karena sistem API sedah dalam pengembangan </p>
       <div class="signature">Don4try</div>
-      <div class="footer-bottom">Admin Panel | © donn.4try</div>
+      <div class="footer-bottom">Official Biography | Copyright donn.4try</div>
     </div>
   </div>
 
   <script>
     const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const listContainer = document.getElementById("userList");
+    let selectedIndex = null;
 
-    if (users.length === 0) {
-      listContainer.innerHTML = "<li>Tidak ada akun terdaftar.</li>";
-    } else {
-      users.forEach((user, index) => {
+    function switchForm(target) {
+      const login = document.getElementById("loginForm");
+      const register = document.getElementById("registerForm");
+
+      if (target === "register") {
+        login.classList.add("fade");
+        setTimeout(() => {
+          login.classList.add("hidden");
+          register.classList.remove("hidden");
+          setTimeout(() => register.classList.add("show"), 50);
+        }, 300);
+      } else {
+        register.classList.remove("show");
+        register.classList.add("fade");
+        setTimeout(() => {
+          register.classList.add("hidden");
+          login.classList.remove("hidden");
+          setTimeout(() => login.classList.remove("fade"), 50);
+        }, 300);
+      }
+    }
+
+    function handleRegister() {
+      const email = document.getElementById("regEmail").value;
+      const password = document.getElementById("regPassword").value;
+      if (!email || !password) return alert("Lengkapi semua data!");
+      users.push({ email, password });
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Berhasil daftar!");
+      switchForm("login");
+    }
+
+    function handleLogin() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      if (email === "admin@gmail.net" && password === "admins") {
+        showAdminPage();
+        return;
+      }
+
+      const valid = users.find(u => u.email === email && u.password === password);
+      if (valid) {
+        alert("Login berhasil! Redirect ke halaman...");
+        window.location.href = "https://donn4try.github.io/modsarea/";
+      } else {
+        alert("Email atau password salah!");
+      }
+    }
+
+    function showAdminPage() {
+      document.getElementById("mainCard").classList.add("hidden");
+      document.getElementById("adminPage").classList.remove("hidden");
+      renderAccountList(users);
+    }
+
+    function renderAccountList(data) {
+      const list = document.querySelector("#accountList ul");
+      list.innerHTML = "";
+      data.forEach((user, index) => {
         const li = document.createElement("li");
-        li.textContent = `${index + 1}. ${user.email}`;
-        listContainer.appendChild(li);
+        li.textContent = user.email;
+        li.onclick = () => toggleAccountOptions(user, index);
+        list.appendChild(li);
       });
     }
 
+    function toggleAccountOptions(user, index) {
+      const box = document.getElementById("inspectBox");
+
+      if (selectedIndex === index) {
+        box.classList.remove("show");
+        selectedIndex = null;
+        return;
+      }
+
+      selectedIndex = index;
+      const fakeIP = "192.168.1." + (index + 10);
+      box.classList.remove("show");
+      void box.offsetWidth;
+      box.innerHTML = `
+        <strong>Email:</strong> <input type="text" id="editEmail" value="${user.email}" /><br>
+        <strong>Password:</strong> <input type="text" id="editPassword" value="${user.password}" /><br>
+        <strong>IP:</strong> ${fakeIP}<br><br>
+        <button class="btn" onclick="saveChanges(${index})">Simpan Perubahan</button>
+        <button class="btn" onclick="deleteAccount(${index})">Hapus Akun</button>
+      `;
+      setTimeout(() => box.classList.add("show"), 50);
+    }
+
+    function saveChanges(index) {
+      const newEmail = document.getElementById("editEmail").value;
+      const newPassword = document.getElementById("editPassword").value;
+
+      if (!newEmail || !newPassword) {
+        alert("Email dan Password tidak boleh kosong.");
+        return;
+      }
+
+      users[index].email = newEmail;
+      users[index].password = newPassword;
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Perubahan disimpan.");
+      selectedIndex = null;
+      document.getElementById("inspectBox").classList.remove("show");
+      showAdminPage();
+    }
+
+    function deleteAccount(index) {
+      if (confirm("Yakin hapus akun ini?")) {
+        users.splice(index, 1);
+        localStorage.setItem("users", JSON.stringify(users));
+        selectedIndex = null;
+        document.getElementById("inspectBox").classList.remove("show");
+        showAdminPage();
+      }
+    }
+
     function logout() {
-      // Contoh aksi logout (bisa disesuaikan)
-      alert("Anda telah logout dari admin panel.");
-      window.location.href = "login.html"; // atau halaman login lain
+      document.getElementById("adminPage").classList.add("hidden");
+      document.getElementById("mainCard").classList.remove("hidden");
+      selectedIndex = null;
+      document.getElementById("inspectBox").classList.remove("show");
+    }
+
+    function filterAccounts() {
+      const keyword = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = users.filter(u => u.email.toLowerCase().includes(keyword));
+      renderAccountList(filtered);
+      document.getElementById("inspectBox").classList.remove("show");
+      selectedIndex = null;
     }
   </script>
 </body>
