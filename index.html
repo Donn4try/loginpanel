@@ -5,219 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LoginPanel</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body, html {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f9f5f2;
-      min-height: 100vh;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
-      background-color: #f9f5f2;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      overflow: hidden;
-    }
-
-    .card {
-      text-align: center;
-      padding: 0 0 20px;
-    }
-
-    .banner {
-      width: 100%;
-      height: 120px;
-      background: url('https://i.ibb.co/kVz2DYYQ/bg.jpg') center/cover no-repeat;
-      border-bottom: 4px solid #f9f5f2;
-    }
-
-    .profile {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-top: -50px;
-      border: 4px solid #f9f5f2;
-      background-color: #333;
-    }
-
-    h2 {
-      margin: 10px 0 5px;
-      font-size: 22px;
-    }
-
-    .followers {
-      margin: 0;
-      color: #666;
-      font-style: italic;
-    }
-
-    input[type="email"], input[type="password"], input[type="text"] {
-      width: calc(100% - 40px);
-      margin: 10px auto;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      display: block;
-    }
-
-    .message {
-      color: red;
-      font-size: 13px;
-      text-align: left;
-      margin: 0 20px 10px;
-      min-height: 16px;
-    }
-
-    button.btn, .btn {
-      display: block;
-      width: calc(100% - 40px);
-      margin: 10px auto;
-      padding: 12px;
-      border-radius: 30px;
-      font-weight: bold;
-      text-align: center;
-      border: 2px solid #111;
-      background: transparent;
-      color: #111;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .btn.dark {
-      background-color: #333;
-      color: #fff;
-      border: none;
-    }
-
-    .btn:hover {
-      transform: scale(1.02);
-      opacity: 0.9;
-    }
-
-    .form-wrapper {
-      transition: all 0.5s ease;
-      backdrop-filter: blur(5px);
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .fade {
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    .show {
-      opacity: 1;
-    }
-
-    #accountList ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    #accountList li {
-      background: #fff;
-      margin: 8px 20px;
-      padding: 10px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    #accountList li:hover {
-      transform: scale(1.02);
-      background-color: #f0f0f0;
-    }
-
-    .footer {
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-      text-align: left;
-      margin-top: auto;
-    }
-
-    .footer img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      object-fit: cover;
-      float: left;
-      margin-right: 15px;
-    }
-
-    .username {
-      font-weight: bold;
-      margin-top: 20px;
-    }
-
-    .footer p {
-      font-size: 13px;
-      margin: 10px 0;
-      clear: both;
-    }
-
-    .signature {
-      font-family: 'Brush Script MT', cursive;
-      font-size: 20px;
-      text-align: right;
-      margin-top: 20px;
-    }
-
-    .footer-bottom {
-      text-align: center;
-      font-size: 12px;
-      margin-top: 15px;
-      border-top: 1px solid #555;
-      padding-top: 10px;
-    }
-
-    #inspectBox {
-      padding: 10px;
-      font-size: 13px;
-      text-align: left;
-      background: rgba(255, 255, 255, 0.6);
-      margin: 10px 20px;
-      border-radius: 8px;
-      backdrop-filter: blur(10px);
-      opacity: 0;
-      transform: scale(0.95);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      pointer-events: none;
-    }
-
-    #inspectBox.show {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-    }
-
-    #logoutBtn {
-      background: crimson;
-      color: white;
-      border: none;
-    }
-
-    #logoutBtn:hover {
-      background: darkred;
-    }
+    * { box-sizing: border-box; }
+    body, html { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background: #f9f5f2; min-height: 100vh; }
+    .container { display: flex; flex-direction: column; min-height: 100vh; width:100%; max-width:400px; margin:0 auto; background:#f9f5f2; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.2); overflow:hidden; }
+    .card { text-align:center; padding:0 0 20px; }
+    .banner { width:100%; height:120px; background:url('https://i.ibb.co/kVz2DYYQ/bg.jpg') center/cover no-repeat; border-bottom:4px solid #f9f5f2; }
+    .profile { width:120px; height:120px; border-radius:50%; object-fit:cover; margin-top:-50px; border:4px solid #f9f5f2; background:#333; }
+    h2 { margin:10px 0 5px; font-size:22px; }
+    .followers { margin:0; color:#666; font-style:italic; }
+    input[type="email"], input[type="password"], input[type="text"] { width:calc(100% - 40px); margin:10px auto; padding:10px; border-radius:10px; border:1px solid #ccc; display:block; }
+    .message { color:red; font-size:13px; text-align:left; margin:0 20px 10px; min-height:16px; }
+    button.btn, .btn { display:block; width:calc(100% - 40px); margin:10px auto; padding:12px; border-radius:30px; font-weight:bold; text-align:center; border:2px solid #111; background:transparent; color:#111; cursor:pointer; transition:all .3s ease; }
+    .btn.dark { background:#333; color:#fff; border:none; }
+    .btn:hover { transform:scale(1.02); opacity:.9; }
+    .form-wrapper { transition:all .5s ease; backdrop-filter:blur(5px); }
+    .hidden { display:none; }
+    .fade { opacity:0; transition:opacity .5s ease; }
+    .show { opacity:1; }
+    #accountList ul { list-style:none; padding:0; margin:0; }
+    #accountList li { background:#fff; margin:8px 20px; padding:10px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1); font-size:14px; cursor:pointer; transition:all .3s ease; }
+    #accountList li:hover { transform:scale(1.02); background:#f0f0f0; }
+    .footer { background:#333; color:#fff; padding:20px; text-align:left; margin-top:auto; }
+    .footer img { width:60px; height:60px; border-radius:50%; object-fit:cover; float:left; margin-right:15px; }
+    .username { font-weight:bold; margin-top:20px; }
+    .footer p { font-size:13px; margin:10px 0; clear:both; }
+    .signature { font-family:'Brush Script MT', cursive; font-size:20px; text-align:right; margin-top:20px; }
+    .footer-bottom { text-align:center; font-size:12px; margin-top:15px; border-top:1px solid #555; padding-top:10px; }
+    #inspectBox { padding:10px; font-size:13px; text-align:left; background:rgba(255,255,255,.6); margin:10px 20px; border-radius:8px; backdrop-filter:blur(10px); opacity:0; transform:scale(.95); transition:opacity .4s ease, transform .4s ease; pointer-events:none; }
+    #inspectBox.show { opacity:1; transform:scale(1); pointer-events:auto; }
+    #logoutBtn { background:crimson; color:white; border:none; }
+    #logoutBtn:hover { background:darkred; }
   </style>
 </head>
 <body>
@@ -227,7 +44,6 @@
       <img src="https://i.ibb.co/MDvPDJ8W/donn.png" class="profile" />
       <h2>MAS DONN</h2>
       <p class="followers">daftar untuk mendapat akses mod</p>
-
       <div class="form-wrapper" id="loginForm">
         <input type="email" id="loginEmail" placeholder="Email" />
         <input type="password" id="loginPassword" placeholder="Password" />
@@ -235,7 +51,6 @@
         <button class="btn dark" onclick="handleLogin()">Login</button>
         <button class="btn" onclick="switchForm('register')">Belum punya akun?</button>
       </div>
-
       <div class="form-wrapper hidden" id="registerForm">
         <input type="email" id="regEmail" placeholder="Email" />
         <input type="password" id="regPassword" placeholder="Password" />
@@ -256,6 +71,15 @@
       <button class="btn dark" id="logoutBtn" onclick="logout()">Logout</button>
     </div>
 
+    <div class="card hidden" id="activityPage">
+      <div class="banner"></div>
+      <img src="https://i.ibb.co/MDvPDJ8W/donn.png" class="profile" />
+      <h2>AKTIVITAS SISTEM</h2>
+      <p class="followers">Log aktivitas mencurigakan</p>
+      <div id="activityLogs" style="text-align:left; margin:0 20px; font-size:13px; max-height:300px; overflow-y:auto;"></div>
+      <button class="btn dark" onclick="backToAdmin()">Kembali ke Admin</button>
+    </div>
+
     <div class="footer" id="about">
       <img src="https://i.ibb.co/MDvPDJ8W/donn.png" />
       <div class="username">@donn.4try</div>
@@ -268,14 +92,18 @@
 
   <script>
     const users = JSON.parse(localStorage.getItem("users") || "[]");
+    let activityLogs = JSON.parse(localStorage.getItem("activityLogs") || "[]");
     let selectedIndex = null;
 
+    function detectDeviceType() {
+      return /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop";
+    }
+
     function switchForm(target) {
-      const login = document.getElementById("loginForm");
-      const register = document.getElementById("registerForm");
       document.getElementById("loginMessage").textContent = "";
       document.getElementById("registerMessage").textContent = "";
-
+      const login = document.getElementById("loginForm");
+      const register = document.getElementById("registerForm");
       if (target === "register") {
         login.classList.add("fade");
         setTimeout(() => {
@@ -298,74 +126,82 @@
       const email = document.getElementById("regEmail").value.trim();
       const password = document.getElementById("regPassword").value.trim();
       const msg = document.getElementById("registerMessage");
-      msg.style.color = "red";
-      msg.textContent = "";
-
+      msg.style.color = "red"; msg.textContent = "";
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !password) { msg.textContent = "Email dan password harus diisi."; return; }
+      if (!emailPattern.test(email)) { msg.textContent = "Format email tidak valid."; return; }
+      if (password.length < 6) { msg.textContent = "Password minimal 6 karakter."; return; }
+      if (users.some(u => u.email === email)) { msg.textContent = "Email sudah digunakan."; return; }
+      if (users.some(u => u.password === password)) { msg.textContent = "Password sudah digunakan oleh akun lain."; return; }
 
-      if (!email || !password) {
-        msg.textContent = "Email dan password harus diisi.";
-        return;
-      }
-
-      if (!emailPattern.test(email)) {
-        msg.textContent = "Format email tidak valid.";
-        return;
-      }
-
-      if (password.length < 6) {
-        msg.textContent = "Password minimal 6 karakter.";
-        return;
-      }
-
-      if (users.some(u => u.email === email)) {
-        msg.textContent = "Email sudah digunakan.";
-        return;
-      }
-
-      if (users.some(u => u.password === password)) {
-        msg.textContent = "Password sudah digunakan oleh akun lain.";
-        return;
-      }
-
-      users.push({ email, password });
+      users.push({ email, password, device: detectDeviceType() });
       localStorage.setItem("users", JSON.stringify(users));
       msg.style.color = "green";
       msg.textContent = "Pendaftaran berhasil!";
       setTimeout(() => switchForm("login"), 1500);
+
+      activityLogs.push({
+        type: "Register",
+        email, password,
+        device: detectDeviceType(),
+        time: new Date().toLocaleString(),
+        result: "Success"
+      });
+      localStorage.setItem("activityLogs", JSON.stringify(activityLogs));
     }
 
     function handleLogin() {
       const email = document.getElementById("loginEmail").value.trim();
       const password = document.getElementById("loginPassword").value.trim();
       const msg = document.getElementById("loginMessage");
-      msg.style.color = "red";
-      msg.textContent = "";
-
-      if (!email || !password) {
-        msg.textContent = "Email dan password wajib diisi.";
-        return;
-      }
+      msg.style.color = "red"; msg.textContent = "";
+      if (!email || !password) { msg.textContent = "Email dan password wajib diisi."; return; }
 
       if (email === "admin@gmail.net" && password === "admins") {
+        activityLogs.push({
+          type: "Admin Login",
+          email, password: "",
+          device: detectDeviceType(),
+          time: new Date().toLocaleString(),
+          result: "Success"
+        });
+        localStorage.setItem("activityLogs", JSON.stringify(activityLogs));
         showAdminPage();
         return;
       }
 
       const valid = users.find(u => u.email === email && u.password === password);
       if (valid) {
+        activityLogs.push({
+          type: "Login Success",
+          email, password,
+          device: detectDeviceType(),
+          time: new Date().toLocaleString(),
+          result: "Success"
+        });
+        localStorage.setItem("activityLogs", JSON.stringify(activityLogs));
+
         msg.style.color = "green";
         msg.textContent = "Login berhasil, mengalihkan...";
         setTimeout(() => {
           window.location.href = "https://donn4try.github.io/modsarea/";
         }, 1500);
       } else {
+        activityLogs.push({
+          type: "Login Failed",
+          email, password,
+          device: detectDeviceType(),
+          time: new Date().toLocaleString(),
+          result: "Failed - Invalid credentials"
+        });
+        localStorage.setItem("activityLogs", JSON.stringify(activityLogs));
         msg.textContent = "Email atau password salah.";
       }
     }
 
     function showAdminPage() {
       document.getElementById("mainCard").classList.add("hidden");
+      document.getElementById("activityPage").classList.add("hidden");
       document.getElementById("adminPage").classList.remove("hidden");
       renderAccountList(users);
     }
@@ -383,13 +219,11 @@
 
     function toggleAccountOptions(user, index) {
       const box = document.getElementById("inspectBox");
-
       if (selectedIndex === index) {
         box.classList.remove("show");
         selectedIndex = null;
         return;
       }
-
       selectedIndex = index;
       const fakeIP = "192.168.1." + (index + 10);
       box.classList.remove("show");
@@ -397,7 +231,9 @@
       box.innerHTML = `
         <strong>Email:</strong> <input type="text" id="editEmail" value="${user.email}" /><br>
         <strong>Password:</strong> <input type="text" id="editPassword" value="${user.password}" /><br>
+        <strong>Device:</strong> ${user.device || "Tidak diketahui"}<br>
         <strong>IP:</strong> ${fakeIP}<br><br>
+        <button class="btn" onclick="viewActivities()">Activities</button><br>
         <button class="btn" onclick="saveChanges(${index})">Simpan Perubahan</button>
         <button class="btn" onclick="deleteAccount(${index})">Hapus Akun</button>
       `;
@@ -407,9 +243,7 @@
     function saveChanges(index) {
       const newEmail = document.getElementById("editEmail").value;
       const newPassword = document.getElementById("editPassword").value;
-
       if (!newEmail || !newPassword) return alert("Email dan Password tidak boleh kosong.");
-
       users[index].email = newEmail;
       users[index].password = newPassword;
       localStorage.setItem("users", JSON.stringify(users));
@@ -429,6 +263,14 @@
       }
     }
 
+    function filterAccounts() {
+      const keyword = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = users.filter(u => u.email.toLowerCase().includes(keyword));
+      renderAccountList(filtered);
+      document.getElementById("inspectBox").classList.remove("show");
+      selectedIndex = null;
+    }
+
     function logout() {
       document.getElementById("adminPage").classList.add("hidden");
       document.getElementById("mainCard").classList.remove("hidden");
@@ -436,12 +278,33 @@
       document.getElementById("inspectBox").classList.remove("show");
     }
 
-    function filterAccounts() {
-      const keyword = document.getElementById("searchInput").value.toLowerCase();
-      const filtered = users.filter(u => u.email.toLowerCase().includes(keyword));
-      renderAccountList(filtered);
-      document.getElementById("inspectBox").classList.remove("show");
-      selectedIndex = null;
+    function viewActivities() {
+      document.getElementById("adminPage").classList.add("hidden");
+      document.getElementById("activityPage").classList.remove("hidden");
+      renderActivityLogs();
+    }
+
+    function backToAdmin() {
+      document.getElementById("activityPage").classList.add("hidden");
+      document.getElementById("adminPage").classList.remove("hidden");
+    }
+
+    function renderActivityLogs() {
+      const logDiv = document.getElementById("activityLogs");
+      logDiv.innerHTML = activityLogs.map(log => {
+        const isSuccess = log.result.toLowerCase().includes("success");
+        const color = isSuccess ? "green" : "red";
+        return `
+          <div style="margin-bottom:10px; border-bottom:1px dashed #ccc; padding-bottom:5px; color:${color}">
+            <strong>${log.type}</strong><br>
+            Email: ${log.email || "-"}<br>
+            Password: ${log.password || "-"}<br>
+            Device: ${log.device}<br>
+            Time: ${log.time}<br>
+            Result: ${log.result}
+          </div>
+        `;
+      }).join("");
     }
   </script>
 </body>
