@@ -72,6 +72,14 @@
       display: block;
     }
 
+    .message {
+      color: red;
+      font-size: 13px;
+      text-align: left;
+      margin: 0 20px 10px;
+      min-height: 16px;
+    }
+
     button.btn, .btn {
       display: block;
       width: calc(100% - 40px);
@@ -218,11 +226,12 @@
       <div class="banner"></div>
       <img src="https://i.ibb.co/MDvPDJ8W/donn.png" class="profile" />
       <h2>MAS DONN</h2>
-      <p class="followers">daftarkan akun untuk mendapat akses mod</p>
+      <p class="followers">daftar untuk mendapat akses mod</p>
 
       <div class="form-wrapper" id="loginForm">
         <input type="email" id="loginEmail" placeholder="Email" />
         <input type="password" id="loginPassword" placeholder="Password" />
+        <div class="message" id="loginMessage"></div>
         <button class="btn dark" onclick="handleLogin()">Login</button>
         <button class="btn" onclick="switchForm('register')">Belum punya akun?</button>
       </div>
@@ -230,6 +239,7 @@
       <div class="form-wrapper hidden" id="registerForm">
         <input type="email" id="regEmail" placeholder="Email" />
         <input type="password" id="regPassword" placeholder="Password" />
+        <div class="message" id="registerMessage"></div>
         <button class="btn dark" onclick="handleRegister()">Daftar</button>
         <button class="btn" onclick="switchForm('login')">Sudah punya akun?</button>
       </div>
@@ -263,6 +273,8 @@
     function switchForm(target) {
       const login = document.getElementById("loginForm");
       const register = document.getElementById("registerForm");
+      document.getElementById("loginMessage").textContent = "";
+      document.getElementById("registerMessage").textContent = "";
 
       if (target === "register") {
         login.classList.add("fade");
@@ -283,18 +295,57 @@
     }
 
     function handleRegister() {
-      const email = document.getElementById("regEmail").value;
-      const password = document.getElementById("regPassword").value;
-      if (!email || !password) return alert("Lengkapi semua data!");
+      const email = document.getElementById("regEmail").value.trim();
+      const password = document.getElementById("regPassword").value.trim();
+      const msg = document.getElementById("registerMessage");
+      msg.style.color = "red";
+      msg.textContent = "";
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!email || !password) {
+        msg.textContent = "Email dan password harus diisi.";
+        return;
+      }
+
+      if (!emailPattern.test(email)) {
+        msg.textContent = "Format email tidak valid.";
+        return;
+      }
+
+      if (password.length < 6) {
+        msg.textContent = "Password minimal 6 karakter.";
+        return;
+      }
+
+      if (users.some(u => u.email === email)) {
+        msg.textContent = "Email sudah digunakan.";
+        return;
+      }
+
+      if (users.some(u => u.password === password)) {
+        msg.textContent = "Password sudah digunakan oleh akun lain.";
+        return;
+      }
+
       users.push({ email, password });
       localStorage.setItem("users", JSON.stringify(users));
-      alert("Berhasil daftar!");
-      switchForm("login");
+      msg.style.color = "green";
+      msg.textContent = "Pendaftaran berhasil!";
+      setTimeout(() => switchForm("login"), 1500);
     }
 
     function handleLogin() {
-      const email = document.getElementById("loginEmail").value;
-      const password = document.getElementById("loginPassword").value;
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+      const msg = document.getElementById("loginMessage");
+      msg.style.color = "red";
+      msg.textContent = "";
+
+      if (!email || !password) {
+        msg.textContent = "Email dan password wajib diisi.";
+        return;
+      }
 
       if (email === "admin@gmail.net" && password === "admins") {
         showAdminPage();
@@ -303,10 +354,13 @@
 
       const valid = users.find(u => u.email === email && u.password === password);
       if (valid) {
-        alert("Login berhasil! Redirect ke halaman...");
-        window.location.href = "https://donn4try.github.io/modsarea/";
+        msg.style.color = "green";
+        msg.textContent = "Login berhasil, mengalihkan...";
+        setTimeout(() => {
+          window.location.href = "https://donn4try.github.io/modsarea/";
+        }, 1500);
       } else {
-        alert("Email atau password salah!");
+        msg.textContent = "Email atau password salah.";
       }
     }
 
@@ -354,10 +408,7 @@
       const newEmail = document.getElementById("editEmail").value;
       const newPassword = document.getElementById("editPassword").value;
 
-      if (!newEmail || !newPassword) {
-        alert("Email dan Password tidak boleh kosong.");
-        return;
-      }
+      if (!newEmail || !newPassword) return alert("Email dan Password tidak boleh kosong.");
 
       users[index].email = newEmail;
       users[index].password = newPassword;
