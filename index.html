@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Mas Donn</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f5f2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body {
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 400px;
+      background-color: #f9f5f2;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      overflow: hidden;
+      min-height: 100vh;
+    }
+
+    .card {
+      text-align: center;
+      padding: 0 0 20px;
+    }
+
+    .banner {
+      width: 100%;
+      height: 120px;
+      background: url('https://i.ibb.co/kVz2DYYQ/bg.jpg') center/cover no-repeat;
+      border-bottom: 4px solid #f9f5f2;
+    }
+
+    img.profile {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: -50px;
+      border: 4px solid #f9f5f2;
+      background-color: #333;
+    }
+
+    h2 {
+      margin: 10px 0 5px;
+      font-size: 22px;
+    }
+
+    p.description {
+      margin: 0;
+      color: #666;
+      font-style: italic;
+    }
+
+    .btn {
+      display: block;
+      width: calc(100% - 40px);
+      margin: 10px auto;
+      padding: 12px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      border: 2px solid #111;
+      background: transparent;
+      color: #111;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+      box-sizing: border-box;
+    }
+
+    .btn.dark {
+      background-color: #333;
+      color: #fff;
+      border: none;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: left;
+      margin-top: auto;
+    }
+
+    .footer img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      float: left;
+      margin-right: 15px;
+    }
+
+    .username {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .footer p {
+      font-size: 13px;
+      margin: 10px 0;
+      clear: both;
+    }
+
+    .signature {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 20px;
+      text-align: right;
+      margin-top: 20px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 15px;
+      border-top: 1px solid #555;
+      padding-top: 10px;
+    }
+
+    .user-list {
+      text-align: left;
+      margin: 20px;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .user-list li {
+      background: #fff;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      font-size: 14px;
+    }
+
+    .logout-container {
+      padding: 0 20px 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="banner"></div>
+      <img src="https://i.ibb.co/MDvPDJ8W/donn.png" alt="Admin Profile" class="profile" />
+      <h2>ADMIN PANEL</h2>
+      <p class="description">Daftar akun terdaftar</p>
+
+      <!-- Daftar akun -->
+      <ul class="user-list" id="userList"></ul>
+
+      <!-- Tombol Logout -->
+      <div class="logout-container">
+        <button class="btn dark" onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <img src="https://i.ibb.co/MDvPDJ8W/donn.png" alt=" " />
+      <div class="username">@donn.4try</div>
+      <p>Selamat datang di admin panel. Anda dapat memantau semua akun yang telah login atau mendaftar.</p>
+      <div class="signature">Don4try</div>
+      <div class="footer-bottom">Admin Panel | © donn.4try</div>
+    </div>
+  </div>
+
+  <script>
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const listContainer = document.getElementById("userList");
+
+    if (users.length === 0) {
+      listContainer.innerHTML = "<li>Tidak ada akun terdaftar.</li>";
+    } else {
+      users.forEach((user, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${index + 1}. ${user.email}`;
+        listContainer.appendChild(li);
+      });
+    }
+
+    function logout() {
+      // Contoh aksi logout (bisa disesuaikan)
+      alert("Anda telah logout dari admin panel.");
+      window.location.href = "login.html"; // atau halaman login lain
+    }
+  </script>
+</body>
+</html>
